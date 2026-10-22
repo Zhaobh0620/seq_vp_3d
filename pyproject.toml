@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "seq-vp-3d"
+version = "1.0.0"
+description = "3D deformable image registration with a certified positive Jacobian determinant on every cell"
+readme = "README.md"
+requires-python = ">=3.10,<3.11"
+dependencies = [
+    "numpy==2.0.2",
+    "scipy==1.15.2",
+    "numba==0.65.0",
+    "torch==2.5.1",
+    "triton==3.1.0",
+    "nibabel==5.4.0",
+]
+
+[project.optional-dependencies]
+eval = ["Surface-Distance-Based-Measures @ git+https://github.com/google-deepmind/surface-distance.git@ee651c80e11ab5fcc3d1b0c1c6e7bbc6fb4c987c"]
+test = ["pytest==9.0.3"]
+
+[tool.setuptools.packages.find]
+include = ["jd_curl*"]

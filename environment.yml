@@ -1,0 +1,22 @@
+# Environment used to develop and validate the frozen model (Linux x86-64, CUDA 12.1).
+# Other versions may change floating-point results.
+name: seq-vp-3d
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pytorch=2.5.1
+  - pytorch-cuda=12.1
+  - torchtriton=3.1.0
+  - pip
+  - pip:
+      - numpy==2.0.2
+      - scipy==1.15.2
+      - numba==0.65.0
+      - llvmlite==0.47.0
+      - nibabel==5.4.0
+      - pytest==9.0.3
+      # evaluation only (HD95); the revision used by the Learn2Reg evaluation
+      - "Surface-Distance-Based-Measures @ git+https://github.com/google-deepmind/surface-distance.git@ee651c80e11ab5fcc3d1b0c1c6e7bbc6fb4c987c"
