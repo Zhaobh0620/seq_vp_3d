@@ -210,7 +210,16 @@ zero-displacement MSE, which is fixed for the whole run.
 - **FP32 energy screen.** In the default execution profile, energy differences are first screened in single
   precision. A screened value is used only outside an error band calibrated against binary64; inside the band the
   comparison is recomputed in binary64. Decisions therefore agree with binary64 whenever the calibrated band bounds
-  the single-precision error. This was checked empirically, not proven. The certificate never uses single precision.
+  the single-precision error. The band was calibrated empirically and is not a proven bound. The certificate never
+  uses single precision.
+  - *Runtime check.* On each grid, the first three screened evaluations and every 50th one after them are also
+    evaluated in binary64. Each term is compared against its own band: $64\,\varepsilon_{32}$ relative for the
+    geometry terms and $4096\,\varepsilon_{32}$ for the barrier. The energy differences are compared against the
+    comparison band. If any of them lies outside its band, that trial uses the binary64 values and screening is
+    switched off for the rest of the run. Screened evaluations between checks are not verified.
+  - *Observed violation.* In one evaluation on 50 held-out OASIS pairs, 1 of 234 binary64 checks (from 6611
+    screened evaluations) found the barrier term outside its band, at 1.6 times the band. This happened on the first
+    screened evaluation of the run, which is a checked one, so that run made all its decisions in binary64.
 - **Execution profiles.** `--throughput vN` profiles change execution, not the mathematical model. Each profile was
   validated against the reference path, either bit for bit or, for precision options, by checking that all decisions
   agree.
