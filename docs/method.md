@@ -217,9 +217,22 @@ zero-displacement MSE, which is fixed for the whole run.
     geometry terms and $4096\,\varepsilon_{32}$ for the barrier. The energy differences are compared against the
     comparison band. If any of them lies outside its band, that trial uses the binary64 values and screening is
     switched off for the rest of the run. Screened evaluations between checks are not verified.
-  - *Observed violation.* In one evaluation on 50 held-out OASIS pairs, 1 of 234 binary64 checks (from 6611
-    screened evaluations) found the barrier term outside its band, at 1.6 times the band. This happened on the first
-    screened evaluation of the run, which is a checked one, so that run made all its decisions in binary64.
+  - *Observed violations* (as of 2026-10-24, 269 completed runs). The check found a value outside its band in 8
+    runs:
+    - 50 held-out OASIS pairs, default configuration (7200 screened evaluations, 254 checks): 1 run, barrier term at
+      1.6 times its band, on the first screened evaluation;
+    - 12 held-out LPBA40 pairs, default configuration (1441 screened, 58 checks): 2 runs, barrier term at 3.3 and
+      7.1 times its band, on the 53rd screened evaluation (the first periodic check);
+    - 36 IBSR18 pairs, default configuration (4556 screened, 180 checks): none;
+    - an ablation study, 9 variants on 19 OASIS validation pairs (171 runs): none in 8 variants; 5 of 19 runs in the
+      variant that replaces the Poisson metric by the identity, with the curl term at 2.0 to 6.5 times its band (in 3
+      of them also the Jacobian term, up to 2.5 times), on the 53rd or 103rd evaluation.
+
+    Where the failing check compared energy differences (7 of the 8 runs), the differences were at most 0.06 times the
+    comparison band. Each of these runs used binary64 from the failing check on. An independent CPU audit confirmed in
+    binary64 that every accepted step of all 8 runs decreased the energy and passed the certificate. Screened
+    decisions made before the failing check were not verified one by one. The band is therefore not reliable for
+    all data. The screen is the profile option `fp32_screen`, on from v37; v36 is the same execution without it.
 - **Execution profiles.** `--throughput vN` profiles change execution, not the mathematical model. Each profile was
   validated against the reference path, either bit for bit or, for precision options, by checking that all decisions
   agree.
