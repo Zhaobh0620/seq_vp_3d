@@ -217,8 +217,8 @@ zero-displacement MSE, which is fixed for the whole run.
     geometry terms and $4096\,\varepsilon_{32}$ for the barrier. The energy differences are compared against the
     comparison band. If any of them lies outside its band, that trial uses the binary64 values and screening is
     switched off for the rest of the run. Screened evaluations between checks are not verified.
-  - *Observed violations* (as of 2026-10-24, 329 completed runs). The check found a value outside its band in 8
-    runs:
+  - *Observed violations* (as of 2026-10-27, 453 runs completed after the model was frozen). The check found a value
+    outside its band in 10 runs; 2 of them are repeats of 2 others on the same pairs:
     - 50 held-out OASIS pairs, default configuration (7200 screened evaluations, 254 checks): 1 run, barrier term at
       1.6 times its band, on the first screened evaluation;
     - 12 held-out LPBA40 pairs, default configuration (1441 screened, 58 checks): 2 runs, barrier term at 3.3 and
@@ -228,11 +228,16 @@ zero-displacement MSE, which is fixed for the whole run.
       and one penalty variant (60 runs; 10925 screened, 365 checks): none;
     - an ablation study, 9 variants on 19 OASIS validation pairs (171 runs): none in 8 variants; 5 of 19 runs in the
       variant that replaces the Poisson metric by the identity, with the curl term at 2.0 to 6.5 times its band (in 3
-      of them also the Jacobian term, up to 2.5 times), on the 53rd or 103rd evaluation.
+      of them also the Jacobian term, up to 2.5 times), on the 53rd or 103rd evaluation;
+    - 19 OASIS validation pairs at 180 s, default configuration (5119 screened, 150 checks): none;
+    - the same 19 validation pairs with the curvature term switched on at the finest level, $\alpha = 10^{-3}$,
+      $3 \cdot 10^{-3}$ and $10^{-2}$ (57 runs; 8663 screened, 320 checks): none;
+    - a repeat of the 36 IBSR18 and 12 LPBA40 runs, read out at fixed times (48 runs; 5771 screened, 238 checks):
+      none on IBSR18; on LPBA40 the same 2 runs as above, with identical values on the same evaluation.
 
-    Where the failing check compared energy differences (7 of the 8 runs), the differences were at most 0.06 times the
+    Where the failing check compared energy differences (9 of the 10 runs), the differences were at most 0.06 times the
     comparison band. Each of these runs used binary64 from the failing check on. An independent CPU audit confirmed in
-    binary64 that every accepted step of all 8 runs decreased the energy and passed the certificate. Screened
+    binary64 that every accepted step of all 10 runs decreased the energy and passed the certificate. Screened
     decisions made before the failing check were not verified one by one. The band is therefore not reliable for
     all data. The screen is the profile option `fp32_screen`, on from v37; v36 is the same execution without it.
 - **Execution profiles.** `--throughput vN` profiles change execution, not the mathematical model. Each profile was
