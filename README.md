@@ -87,9 +87,9 @@ image), with the certificate in `final_native.json`.
 
 ## Citation
 
-A manuscript describing the method is in preparation. Until it is available, please contact the author before
-using or citing this work.
+A manuscript describing the method (B. Zhao, Z. Zhou and G. Liao) is in preparation; its reference will be added
+here once it is available.
 
 ## License
 
-No license is granted at this time; all rights are reserved by the author.
+BSD 3-Clause License; see [LICENSE](LICENSE).
